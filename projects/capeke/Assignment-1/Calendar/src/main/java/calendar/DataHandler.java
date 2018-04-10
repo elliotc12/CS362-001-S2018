@@ -267,9 +267,9 @@ public class DataHandler {
                 }
             } //for nodelist
             return calDays;
-        }
+    }
 
-    
+
     /**
      * This takes the given appointment and constructs a linked list of 
      * GregorianCalendar's, each of which represent a day when the appointment
@@ -359,7 +359,7 @@ public class DataHandler {
                         //If the calendar is set to a day of the week that the
                         //appt recurs on then return that day.
                         if (recurDays[i] == newDayOfWeek) {
-                            return nextDay;
+                            return day;
                         }
                     }
                 }

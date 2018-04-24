@@ -18,10 +18,9 @@ public class ApptTest  {
       assertEquals(0, appt0.getRecurIncrement());
       appt0.setValid();
   }
-@Test(timeout = 4000)
- public void test01()  throws Throwable  {
 
+    @Test(timeout = 4000)
+    public void test01()  throws Throwable  {
 
-}
-
+    }
 }

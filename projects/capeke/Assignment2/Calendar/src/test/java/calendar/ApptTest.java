@@ -66,4 +66,11 @@ public class ApptTest  {
 	assertFalse(appt.isOn(0, 0, 0));
 	assertTrue(appt.hasTimeSet());
     }
+
+    @Test(timeout = 4000)
+    public void test05()  throws Throwable  {
+	Appt badMonth = new Appt(15, 30, 2, 10, 2018, "Testtitle", "Testdescription", "testemail");
+        badMonth.setValid();
+	assertFalse(badMonth.getValid());
+    }
 }

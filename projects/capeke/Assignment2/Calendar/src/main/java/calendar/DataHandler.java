@@ -39,6 +39,8 @@ public class DataHandler {
     
     /** The auto-save setting to use **/
     private boolean autoSave;
+
+    public boolean diagnose;
     
     /**
      * Default constructor
@@ -66,6 +68,8 @@ public class DataHandler {
     public DataHandler(String fileName, boolean autoSave) throws IOException {
         //Record the line separator for later use
         String separator = System.getProperty("line.separator");
+
+	this.diagnose = true;
         
         //The data handler isn't valid unless everything is set up correctly
         valid = false;
@@ -127,9 +131,6 @@ public class DataHandler {
      **/
     public List<CalDay> getApptRange(GregorianCalendar firstDay, 
             GregorianCalendar lastDay) throws DateOutOfRangeException {
-
-            //Internal Diagnositic Messages turned on when true
-            boolean diagnose = false;
             
             //If the data handler isn't initialized return null
             if (isValid() == false) {

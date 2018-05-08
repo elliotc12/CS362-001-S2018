@@ -48,7 +48,7 @@ public class CalendarMain {
 		 int startHour=15;
 		 int startMinute=30;
 		 int startDay=thisDay;  	
-		 int startMonth=thisMonth+1; 	
+		 int startMonth=thisMonth; 	
 		 int startYear=thisYear; 	
 		 String title="Birthday Party";
 		 String description="This is my birthday party.";

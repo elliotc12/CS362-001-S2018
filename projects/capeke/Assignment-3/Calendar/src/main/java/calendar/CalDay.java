@@ -104,21 +104,13 @@ public class CalDay {
 	 * time set placed at the beginning.
 	 */
 	public Iterator<?> iterator() {
-	    if (isValid()) {
-	        return getAppts().iterator();
-	    }
-	    else {
-	        return null;
-	    }
+	    return getAppts().iterator();
 	}
 	
 	/** Sets appts */
 	private void setAppts(LinkedList<Appt> appts) {
-		if(appts!=null)
-				this.appts = appts;
-		
-		if(appts!=null&&appts.size()==0)
-			this.appts = appts;
+	    assert appts != null;
+	    this.appts = appts;
 	}
 	
 	/** Sets day */
@@ -194,7 +186,7 @@ public class CalDay {
 	*	Returns the data the data to be displayed.
 	*	the specified data.
 	**/
-    public String getFullInfomrationApp( Object calday) {
+    public String getFullInformationApp( Object calday) {
                     
         Iterator itr = ((CalDay)calday).iterator();
         

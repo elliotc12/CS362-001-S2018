@@ -81,17 +81,18 @@ public class DataHandler {
         //Read the XML file...
         //Step 1. Set up document builder factory and its settings
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setValidating(false);
-        dbf.setIgnoringComments(false);
-        dbf.setIgnoringElementContentWhitespace(false);
-        dbf.setCoalescing(false);
-        dbf.setExpandEntityReferences(true);
+        // dbf.setValidating(false);
+        // dbf.setIgnoringComments(false);
+        // dbf.setIgnoringElementContentWhitespace(false);
+        // dbf.setCoalescing(false);
+        // dbf.setExpandEntityReferences(true);
         
         //Step 2. Create a document builder from the factory
-        DocumentBuilder db = null;
-        try {
-            db = dbf.newDocumentBuilder();
-        }
+	DocumentBuilder db = null;
+
+	try {
+	    db = dbf.newDocumentBuilder();
+	}
         catch (ParserConfigurationException pce) {
             throw new IOException("Invalid parser configuration." + separator +
             pce.getMessage());
@@ -132,11 +133,6 @@ public class DataHandler {
     public List<CalDay> getApptRange(GregorianCalendar firstDay, 
             GregorianCalendar lastDay) throws DateOutOfRangeException {
             
-            //If the data handler isn't initialized return null
-            if (isValid() == false) {
-                return null;
-            }
-            
             //Make sure that the first day is before the last day
             if (!firstDay.before(lastDay)) {
                 throw new DateOutOfRangeException("Second date specified is not " +
@@ -153,51 +149,30 @@ public class DataHandler {
                 nextDay.add(nextDay.DAY_OF_MONTH, 1);
             }
             
-            if (diagnose) {
-                System.out.println("=======================================");
-                System.out.println("DEBUGGING GETTING OF APPOINTMENTS      ");
-            }
-            
             //Retrieve the root node - <calendar>
             Document doc = getDocument();
             Element root = doc.getDocumentElement();
-            
-            if (diagnose) {
-                System.out.println("Root node: " + root.getTagName());
-                System.out.println("All following nodes should be appt nodes.");
-            }
             
             //Retrieve the root's children - <appt> nodes
             NodeList appts = root.getChildNodes();
             for (int i = 0; i < appts.getLength(); i++) {
                 Element currentAppt = (Element) appts.item(i);
-                
-                if (diagnose) {
-                    System.out.println("Nodes under the root: " + 
-                        currentAppt.getTagName());
-                }
-                
+
                 //For this appointment, get the values of all fields
                 NodeList fieldNodes = currentAppt.getChildNodes();
                 Hashtable<String, String> fields = new Hashtable<String, String>();
-                if (diagnose) {
-                    System.out.println("Preparing to read each field for the appt");
-                }
+
                 for (int j = 0; j < fieldNodes.getLength(); j++) {
                     Element currentField = (Element) fieldNodes.item(j);
                     String fieldName = currentField.getTagName();
-                    if (diagnose) {
-                        System.out.println("Reading field: " + fieldName);
-                    }
+
                     String fieldValue = "";
                     NodeList fieldValueNodes = currentField.getChildNodes();
                     for (int k = 0; k < fieldValueNodes.getLength(); k++) {
                         Text text = (Text)fieldValueNodes.item(k);
                         fieldValue += text.getData();
                     }
-                    if (diagnose) {
-                        System.out.println("Reading field's value: " + fieldValue);
-                    }
+
                     
                     fields.put(fieldName, fieldValue);
                 }
@@ -228,16 +203,11 @@ public class DataHandler {
                             Integer.parseInt((String)fields.get("recurNumber")));
                 //**When changing these later, remember to check for NULL ***/
                 
-                if (diagnose) {
-                    System.out.println("Calculating appointment occurrences.");
-                }
+
                 //Figure out which days the appointment occurs on
                 LinkedList<GregorianCalendar>  apptOccursOnDays = 
                     getApptOccurences(appt, firstDay, lastDay);
                 
-                if (diagnose) { 
-                    System.out.println("This appointment occurs on: ");
-                }
                 
                 //For each day in the list, calculate the difference between the
                 //first day and the day of occurrence and add the appointment to 
@@ -248,9 +218,6 @@ public class DataHandler {
                 while (itr.hasNext()) {
                     GregorianCalendar apptOccursOn = (GregorianCalendar)itr.next();
                     
-                    if (diagnose) {
-                        System.out.println("\t" + apptOccursOn);
-                    }
                     
                     while(nextDay.before(apptOccursOn)) {
                         daysDifference++;
@@ -263,9 +230,7 @@ public class DataHandler {
                 }
                 
                 //This appointment has been added to all CalDays
-                if (diagnose) {
-                    System.out.println("This appointment is done.");
-                }
+
             } //for nodelist
             return calDays;
     }
@@ -277,7 +242,7 @@ public class DataHandler {
      * occurs. The days are guaranteed to be between firstDay (inclusive) and
      * lastDay (exclusive). They are guaranteed to be in order.
      **/
-    private static LinkedList<GregorianCalendar> getApptOccurences(Appt appt, 
+    public static LinkedList<GregorianCalendar> getApptOccurences(Appt appt, 
         GregorianCalendar firstDay, GregorianCalendar lastDay) {
         
         LinkedList<GregorianCalendar> result = new LinkedList<GregorianCalendar>();
@@ -326,7 +291,7 @@ public class DataHandler {
      * appointment does not recur it returns null. If the date cannot be 
      * calculated for some reason it returns null.
      **/
-    private static GregorianCalendar getNextApptOccurrence(Appt appt, 
+    public static GregorianCalendar getNextApptOccurrence(Appt appt, 
             GregorianCalendar day) {
         //If the appointment does not recur then return null
         if (!appt.isRecurring()) {
@@ -560,14 +525,14 @@ public class DataHandler {
     /**
      * @return True if autoSave is set
      **/
-    private boolean isAutoSave() {
+    public boolean isAutoSave() {
         return autoSave;
     }
     
     /** 
      * @return True if the dataHandler is initialized correctly
      **/
-    private boolean isValid() {
+    public boolean isValid() {
         return valid;
     }
     

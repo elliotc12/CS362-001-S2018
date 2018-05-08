@@ -373,11 +373,7 @@ public class Appt{
     }
     public String toString()
     {
-    	
-		if (!getValid()) {
-		    System.err.println("\tThis appointment is not valid");
-		}
-         String day= this.getStartMonth()+"/"+this.getStartDay()+"/"+this.getStartYear() + " at ";
+        String day= this.getStartMonth()+"/"+this.getStartDay()+"/"+this.getStartYear() + " at ";
         return "\t"+ day +  this.represntationApp()  + " ," +  getTitle()+ ", "+  getDescription()+"\n";
     }
 

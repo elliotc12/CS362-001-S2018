@@ -168,7 +168,7 @@ public class CalendarMain {
 				
 				CalDay calday= calDays.get(i);
 				
-				String str= calday.getFullInfomrationApp(calday);
+				String str= calday.getFullInformationApp(calday);
 				System.out.println(str);
 
 				LinkedList<Appt>  appts =calDays.get(i).getAppts();

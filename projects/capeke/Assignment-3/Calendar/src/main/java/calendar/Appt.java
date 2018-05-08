@@ -176,7 +176,7 @@ public class Appt{
 		else if (startYear <= 0)
 			this.valid = false;
 		else {
-			int NumDaysInMonth = CalendarUtil.NumDaysInMonth(startYear, startMonth);
+			int NumDaysInMonth = CalendarUtil.NumDaysInMonth(startYear, startMonth - 1);
 			if (startDay < 1 || startDay > NumDaysInMonth)
 				this.valid = false;
 			else

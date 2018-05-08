@@ -57,11 +57,11 @@ public class CalDay {
 		int day = cal.get(cal.DAY_OF_MONTH);
 		int month = cal.get(cal.MONTH);
 		int year = cal.get(cal.YEAR);
-
+	
 		setDay(day);
 		setMonth(month+1);
 		setYear(year);
-
+	
 		setAppts(new LinkedList<Appt>());
 	
 		valid = true;
@@ -173,7 +173,7 @@ public class CalDay {
 	     StringBuilder sb = new StringBuilder();
 	
 		if (isValid()) {
-			String todayDate = (getMonth()) + "/" + getDay() + "/" + getYear();
+			String todayDate = (getMonth()+1) + "/" + getDay() + "/" + getYear();
 			sb.append("\t --- " + todayDate + " --- \n");
 			sb.append(" --- -------- Appointments ------------ --- \n");
 			Iterator<Appt> itr = this.appts.iterator();

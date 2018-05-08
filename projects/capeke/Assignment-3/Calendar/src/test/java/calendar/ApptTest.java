@@ -14,6 +14,8 @@ public class ApptTest  {
       String string0 = appt0.toString();
       assertEquals(2, appt0.getRecurBy());
       assertFalse(appt0.isRecurring());
+      assertEquals(appt0.getEmailAddress(), "xyz@gmail.com");
+      assertEquals(appt0.getXmlElement(), null);
       assertEquals("\t14/9/2018 at 3:30pm ,Birthday Party, This is my birthday party\n", string0);
       assertEquals(0, appt0.getRecurIncrement());
       appt0.setValid();
@@ -71,6 +73,47 @@ public class ApptTest  {
     public void test05()  throws Throwable  {
 	Appt badMonth = new Appt(15, 30, 2, 10, 2018, "Testtitle", "Testdescription", "testemail");
         badMonth.setValid();
-	assertFalse(badMonth.getValid());
+    }
+
+    @Test(timeout = 4000)
+    public void test06()  throws Throwable  {
+	// Appt(int startHour, int startMinute, int startDay, int startMonth, int startYear, String title, String description, String emailAddress ) {
+
+	Appt upperHour = new Appt(23, 30, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt upperMinute = new Appt(15, 59, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt upperMonth = new Appt(15, 30, 9, 12, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt upperDay = new Appt(15, 30, 31, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	upperHour.setValid();
+	upperMinute.setValid();
+	upperMonth.setValid();
+	upperDay.setValid();
+	assertTrue(upperHour.getValid());
+	assertTrue(upperMinute.getValid());
+	assertTrue(upperMonth.getValid());
+	assertTrue(upperDay.getValid());
+
+	Appt lowerHour = new Appt(15, 30, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowerMinute = new Appt(15, 0, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowerMonth = new Appt(15, 30, 9, 1, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowerDay = new Appt(15, 30, 1, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowerYear = new Appt(15, 30, 30, 10, 1, "Testtitle", "Testdescription", "testemail");
+	lowerHour.setValid(); lowerMinute.setValid(); lowerMonth.setValid(); lowerDay.setValid(); lowerYear.setValid();
+	assertTrue(lowerHour.getValid()); assertTrue(lowerMinute.getValid()); assertTrue(lowerMonth.getValid()); assertTrue(lowerDay.getValid()); assertTrue(lowerYear.getValid()); 
+
+	
+	Appt highHour = new Appt(25, 30, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt highMinute = new Appt(15, 61, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt highMonth = new Appt(15, 30, 9, 13, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt highDay = new Appt(15, 30, 32, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	highHour.setValid(); highMinute.setValid(); highMonth.setValid(); highDay.setValid();
+	assertFalse(highHour.getValid()); assertFalse(highMinute.getValid()); assertFalse(highMonth.getValid()); assertFalse(highDay.getValid());
+
+	Appt lowHour = new Appt(-1, 30, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowMinute = new Appt(15, -1, 9, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowMonth = new Appt(15, 30, 9, -1, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowDay = new Appt(15, 30, -1, 10, 2018, "Testtitle", "Testdescription", "testemail");
+	Appt lowYear = new Appt(15, 30, 9, 10, -1, "Testtitle", "Testdescription", "testemail");
+	lowHour.setValid(); lowMinute.setValid(); lowMonth.setValid(); lowDay.setValid(); lowYear.setValid();
+	assertFalse(lowHour.getValid()); assertFalse(lowMinute.getValid()); assertFalse(lowMonth.getValid()); assertFalse(lowDay.getValid()); assertFalse(lowYear.getValid());
     }
 }

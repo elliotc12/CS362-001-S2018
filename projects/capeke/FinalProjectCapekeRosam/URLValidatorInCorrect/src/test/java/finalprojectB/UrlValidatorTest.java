@@ -1,50 +1,37 @@
-
 package finalprojectB;
 
 import junit.framework.TestCase;
 
-//You can use this as a skeleton for your 3 different test approach
-//It is an optional to use this file, you can generate your own test file(s) to test the target function!
-// Again, it is up to you to use this file or not!
-
-
-
-
-
 public class UrlValidatorTest extends TestCase {
 
+    public UrlValidatorTest(String testName) {
+	super(testName);
+    }
 
-   public UrlValidatorTest(String testName) {
-      super(testName);
-   }
+    public void testManualTest() {
+        String[] schemes = {"http","https"};
+	UrlValidator urlValidator = new UrlValidator(schemes);
+	boolean output1 = urlValidator.isValid("www.google.com");
+	boolean output2 = urlValidator.isValid("");
+	boolean output3 = urlValidator.isValid("");
+	boolean output4 = urlValidator.isValid("");
+	boolean output5 = urlValidator.isValid("http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5");
+	System.out.println("Output1 is valid: " + output1);
+	System.out.println("Output2 is valid: " + output2);
+	System.out.println("Output3 is valid: " + output3);
+	System.out.println("Output4 is valid: " + output4);
+	System.out.println("Output5 is valid: " + output5);
+    }
 
+    public void testYourFirstPartition() {
+	System.out.println("Hello,, World");
+    }
    
-   
-   public void testManualTest()
-   {
-//You can use this function to implement your manual testing	   
-	   
-   }
-   
-   
-   public void testYourFirstPartition()
-   {
-	 //You can use this function to implement your First Partition testing	   
-
-   }
-   
-   public void testYourSecondPartition(){
-		 //You can use this function to implement your Second Partition testing	   
-
-   }
-   //You need to create more test cases for your Partitions if you need to 
-   
-   public void testIsValid()
-   {
-	   //You can use this function for programming based testing
+   public void testYourSecondPartition() {
 
    }
    
+   public void testIsValidUnitTest() {
 
-
+   }
 }

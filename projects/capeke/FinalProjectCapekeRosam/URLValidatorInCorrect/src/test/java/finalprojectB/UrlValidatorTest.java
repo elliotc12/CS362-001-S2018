@@ -10,21 +10,20 @@ public class UrlValidatorTest extends TestCase {
 
     public void testManualTest() {
         String[] schemes = {"http","https"};
-	UrlValidator urlValidator = new UrlValidator(schemes);
-	boolean output1 = urlValidator.isValid("www.google.com");
-	boolean output2 = urlValidator.isValid("");
-	boolean output3 = urlValidator.isValid("");
-	boolean output4 = urlValidator.isValid("");
-	boolean output5 = urlValidator.isValid("http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5");
-	System.out.println("Output1 is valid: " + output1);
-	System.out.println("Output2 is valid: " + output2);
-	System.out.println("Output3 is valid: " + output3);
-	System.out.println("Output4 is valid: " + output4);
-	System.out.println("Output5 is valid: " + output5);
+	UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+	boolean output_notilde = urlValidator.isValid("http://www.google.com");
+	boolean output_tilde = urlValidator.isValid("http://www.google.com/~");
+	boolean output_long = urlValidator.isValid("http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5");
+	boolean output_empty = urlValidator.isValid("http:");
+
+	System.out.println("http://www.google.com is valid: " + output_notilde);
+	System.out.println("http://www.google.com/~ is valid: " + output_tilde);
+	System.out.println("http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5 is valid: " + output_long);
+	System.out.println("http: is valid: " + output_empty);
     }
 
     public void testYourFirstPartition() {
-	System.out.println("Hello,, World");
+        
     }
    
    public void testYourSecondPartition() {

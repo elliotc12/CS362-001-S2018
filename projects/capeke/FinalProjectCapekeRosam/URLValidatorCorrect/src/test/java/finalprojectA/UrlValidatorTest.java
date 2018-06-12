@@ -1,6 +1,9 @@
 package finalprojectA;
 
 import junit.framework.TestCase;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Random;
 
 public class UrlValidatorTest extends TestCase {
 
@@ -116,8 +119,49 @@ public class UrlValidatorTest extends TestCase {
 	    }
 	}
     }
-   
-   public void testIsValidUnitTest() {
 
-   }
+    public void testIsValidUnitTest_1() {
+	String[] v_schemes = {"file"};
+	UrlValidator urlValidator = new UrlValidator(v_schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+	assertEquals(urlValidator.isValid(null), false);
+    }
+
+    public void testIsValidUnitTest_2() {
+	System.out.println("\n\n----Starting regex test----");
+	String[] v_schemes = {"file"};
+	UrlValidator urlValidator = new UrlValidator(v_schemes, UrlValidator.ALLOW_ALL_SCHEMES);
+
+	String my_regex =
+	    "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+	// Valid URL regex found on https://regexr.com/3e6m0
+	Pattern my_pattern = Pattern.compile(my_regex);
+
+	Random rand = new Random();
+
+	String valid_chars = "au./:?";
+	int vclen = valid_chars.length();
+	// System.out.println("vc is: " + valid_chars);
+
+	for (int t = 0; t < 1000000; t++) {
+	    StringBuilder test_match = new StringBuilder();
+	    for (int i = 0; i < 8; i++) {
+		int rnum = rand.nextInt(valid_chars.length());
+		// System.out.println(i + " " + rnum);
+		test_match.append(valid_chars.charAt(rnum));
+	    }
+	    String test_url = "http://" + test_match.toString();
+	    boolean my_regex_matches = my_pattern.matcher(test_url).matches();
+	    boolean code_isValid = urlValidator.isValid(test_url);
+
+	    if (code_isValid) {
+		System.out.print(test_url + " passes through isValid regex");
+		if (my_regex_matches)
+		    System.out.print(" and my regex\n");
+		else {
+		    System.out.print(" NOT my regex.\n");
+		    assertTrue(my_regex_matches);
+		}
+	    }
+	}
+    }
 }
